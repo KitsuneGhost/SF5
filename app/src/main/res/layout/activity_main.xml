@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.MainActivity">
+
+    <View
+        android:id="@+id/buttons_outline"
+        android:layout_width="315sp"
+        android:layout_height="180sp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/light_gray_outline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_outline" />
+
+    <View
+        android:id="@+id/edit_outline"
+        android:layout_width="315sp"
+        android:layout_height="180sp"
+        android:layout_marginTop="168dp"
+        android:background="@drawable/light_gray_outline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/password_outline_l"
+        android:layout_width="230sp"
+        android:layout_height="50sp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/gray_outline"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_outline"
+        app:layout_constraintEnd_toEndOf="@+id/edit_outline"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="@+id/edit_outline" />
+
+    <View
+        android:id="@+id/login_outline_l"
+        android:layout_width="230sp"
+        android:layout_height="50sp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/gray_outline"
+        app:layout_constraintEnd_toEndOf="@+id/edit_outline"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="@+id/edit_outline"
+        app:layout_constraintTop_toTopOf="@+id/edit_outline" />
+
+    <EditText
+        android:id="@+id/login_editText_l"
+        android:layout_width="220sp"
+        android:layout_height="50sp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/login_et"
+        app:layout_constraintBottom_toBottomOf="@+id/login_outline_l"
+        app:layout_constraintEnd_toEndOf="@+id/login_outline_l"
+        app:layout_constraintStart_toStartOf="@+id/login_outline_l" />
+
+    <EditText
+        android:id="@+id/password_editText_l"
+        android:layout_width="220sp"
+        android:layout_height="50sp"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:text="@string/password_et"
+        app:layout_constraintBottom_toBottomOf="@+id/password_outline_l"
+        app:layout_constraintEnd_toEndOf="@+id/password_outline_l"
+        app:layout_constraintStart_toStartOf="@+id/password_outline_l" />
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="230sp"
+        android:layout_height="50sp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/red_outline"
+        android:text="@string/log_in"
+        app:layout_constraintEnd_toEndOf="@+id/buttons_outline"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="@+id/buttons_outline"
+        app:layout_constraintTop_toTopOf="@+id/buttons_outline" />
+
+    <Button
+        android:id="@+id/register_button_l"
+        android:layout_width="280sp"
+        android:layout_height="50sp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/red_outline"
+        android:text="@string/register"
+        app:layout_constraintBottom_toBottomOf="@+id/buttons_outline"
+        app:layout_constraintEnd_toEndOf="@+id/buttons_outline"
+        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintStart_toStartOf="@+id/buttons_outline" />
+</androidx.constraintlayout.widget.ConstraintLayout>
