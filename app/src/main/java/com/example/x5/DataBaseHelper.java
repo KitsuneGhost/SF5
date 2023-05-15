@@ -63,6 +63,7 @@ public class DataBaseHelper {
                     String query = "INSERT INTO users (id, login, password) VALUES (1, '"  + login
                             + "', " + password + ")"; // SQL запрос в бд
                     ResultSet resultSet = connection.createStatement().executeQuery(query); // выполняем запрос и получаем result set
+                    resultSet.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -92,6 +93,7 @@ public class DataBaseHelper {
                         int rs_password = resultSet.getInt("password"); // получаем пароль из resultSet
                         success = rs_password == password; // сравниваем пароли и присваем резултат success
                     }
+                    resultSet.close();
 
                 } catch (Exception e) {
                     e.printStackTrace();
