@@ -5,6 +5,8 @@ import android.util.Log;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Objects;
 
 
 public class DataBaseHelper {
@@ -54,7 +56,6 @@ public class DataBaseHelper {
         }
     }
 
-
     public void register(String login, int password) {  // метод для регистрации пользователей
         Thread thread = new Thread(new Runnable() { // создаем экземпляр
             @Override
@@ -62,8 +63,7 @@ public class DataBaseHelper {
                 try {
                     String query = "INSERT INTO users (id, login, password) VALUES (1, '"  + login
                             + "', " + password + ")"; // SQL запрос в бд
-                    ResultSet resultSet = connection.createStatement().executeQuery(query); // выполняем запрос и получаем result set
-                    resultSet.close();
+                    connection.createStatement().executeQuery(query);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -81,7 +81,7 @@ public class DataBaseHelper {
         }
     }
 
-    public Boolean check_login(String login, int password) {// функция для проверки пароля
+    public boolean check_login(String login, int password) {// функция для проверки пароля
         Thread thread = new Thread(new Runnable() { // создаем экземпляр
             @Override
             public void run() { // переопределяем метод

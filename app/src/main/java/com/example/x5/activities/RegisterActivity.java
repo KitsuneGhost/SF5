@@ -43,7 +43,6 @@ public class RegisterActivity extends AppCompatActivity {
                     String login = login_editText_r.getText().toString();
                     int hashcoded_password = password_editText_r.getText().toString().hashCode();
                     DBHelper.register(login, hashcoded_password); // вызываем функцию для регистрации
-
                     Intent Intent = new Intent(RegisterActivity.this, AppActivity.class);
                     RegisterActivity.this.startActivity(Intent); //переход в app Activity
                 }
