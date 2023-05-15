@@ -13,5 +13,4 @@ public class functions {
     public Boolean eight_length(EditText et) {
         return et.getText().toString().length() < 8;
     }
-
 }

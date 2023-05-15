@@ -30,22 +30,19 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                if (f.is_not_filled(password_editText_r) || f.is_not_filled(login_editText_r))
-                {
+                if (f.is_not_filled(password_editText_r) || f.is_not_filled(login_editText_r)) {
                     Toast.makeText(getApplicationContext(), "Какое-то из полей не заполнено!",
-                            Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_SHORT).show(); // проверка полей
                 }
-                else if (f.eight_length(password_editText_r))
-                {
+                else if (f.eight_length(password_editText_r)) {
                     Toast.makeText(getApplicationContext(), "В пароле меньше символов!",
-                            Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_SHORT).show(); // проверка длины пароля
                 }
-                else
-                {
-                    DataBaseHelper DBHelper = new DataBaseHelper();
+                else {
+                    DataBaseHelper DBHelper = new DataBaseHelper(); // экземпляр класса бд
                     String login = login_editText_r.getText().toString();
                     int hashcoded_password = password_editText_r.getText().toString().hashCode();
-                    DBHelper.register(login, hashcoded_password);
+                    DBHelper.register(login, hashcoded_password); // вызываем функцию для регистрации
 
                     Intent Intent = new Intent(RegisterActivity.this, AppActivity.class);
                     RegisterActivity.this.startActivity(Intent); //переход в app Activity

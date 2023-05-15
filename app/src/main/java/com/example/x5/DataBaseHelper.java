@@ -4,10 +4,12 @@ import android.util.Log;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 
 
 public class DataBaseHelper {
     private Connection connection;
+    private Boolean success; // нужен для работыфункции check_login (в ней будет храниться результат ее работы)
 
     private static final String TAG = "DBHelper"; // тег для LogCat
 
@@ -60,9 +62,40 @@ public class DataBaseHelper {
                 try {
                     String query = "INSERT INTO users (id, login, password) VALUES (1, '"  + login
                             + "', " + password + ")"; // SQL запрос в бд
-                    connection.createStatement().executeQuery(query); // выполняем запрос
+                    ResultSet resultSet = connection.createStatement().executeQuery(query); // выполняем запрос и получаем result set
                 } catch (Exception e) {
                     e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start(); // запуск потока
+        // отчет о потоке
+        try {
+            thread.join();
+            Log.i(TAG, "Reg Thread Succeed!");
+        } catch (Exception e) {
+            Log.e(TAG, "Reg Thread failed!");
+            e.printStackTrace();
+        }
+    }
+
+    public Boolean check_login(String login, int password) {// функция для проверки пароля
+        Thread thread = new Thread(new Runnable() { // создаем экземпляр
+            @Override
+            public void run() { // переопределяем метод
+                try {
+                    String query = "SELECT password FROM users WHERE login = '" + login + "'"; // SQL запрос в бд
+                    ResultSet resultSet = connection.createStatement().executeQuery(query); // выполняем запрос
+
+                    while (resultSet.next()) {
+                        int rs_password = resultSet.getInt("password"); // получаем пароль из resultSet
+                        success = rs_password == password; // сравниваем пароли и присваем резултат success
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    success = false;
                 }
             }
         });
@@ -72,9 +105,11 @@ public class DataBaseHelper {
         try { // отчет о потоке
             thread.join();
             Log.i(TAG, "Reg Thread Succeed!");
+            return success;
         } catch (Exception e) {
             Log.e(TAG, "Reg Thread failed!");
             e.printStackTrace();
+            return false;
         }
     }
 }

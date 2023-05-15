@@ -42,7 +42,17 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (f.is_not_filled(password_editText_l) || f.is_not_filled(login_editText_l)) {
                     Toast.makeText(getApplicationContext(), "Какое-то из полей не заполнено!",
-                            Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_SHORT).show();  // процверка полей
+                } else {
+                    String login = login_editText_l.getText().toString();
+                    int password = password_editText_l.getText().toString().hashCode();
+                    if (db.check_login(login, password)) {  // проверка пароля
+                        Intent Intent = new Intent(MainActivity.this, AppActivity.class);
+                        MainActivity.this.startActivity(Intent); //переход в другую активность
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Неверный логин или пароль!",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
