@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <FrameLayout
-        android:id="@+id/frameLayout"
+        android:id="@+id/fragmentLayout"
         android:layout_width="409dp"
         android:layout_height="659dp"
         android:layout_marginBottom="2dp"
@@ -52,7 +52,7 @@
             android:layout_weight="1"
             android:background="@drawable/gray_outline"
             android:contentDescription="@string/shopping"
-            app:srcCompat="@drawable/shopping_cart" />
+            app:srcCompat="@drawable/shopping_cart_red" />
 
         <ImageButton
             android:id="@+id/quests_btn"

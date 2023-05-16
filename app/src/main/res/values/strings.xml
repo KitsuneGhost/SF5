@@ -8,4 +8,7 @@
     <string name="profile">Профиль</string>
     <string name="shopping">Магазин</string>
     <string name="quests">Задания</string>
+    <string name="product_name">Название</string>
+    <string name="product_price">Цена</string>
+    <string name="photo">Фото</string>
 </resources>

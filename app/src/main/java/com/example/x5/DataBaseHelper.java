@@ -5,9 +5,7 @@ import android.util.Log;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Objects;
-
+import java.util.ArrayList;
 
 public class DataBaseHelper {
     private Connection connection;
@@ -113,5 +111,41 @@ public class DataBaseHelper {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public ArrayList<String[]> getProductList() {
+        ArrayList<String[]> product_list = new ArrayList<>();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    String query = "SELECT * FROM products";
+                    ResultSet resultSet = connection.createStatement().executeQuery(query);
+
+                    while (resultSet.next()) {
+                        String product_name = resultSet.getString("product_name");
+                        String product_price = ""+resultSet.getInt("product_price");
+                        String product_info = resultSet.getString("product_info");
+                        String[] list = new String[] {product_name, product_price, product_info};
+                        product_list.add(list);
+                    }
+                    resultSet.close();
+                    Log.i(TAG, "Got product list!");
+                } catch (Exception e) {
+                    Log.e(TAG, "Did not get product list!");
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+
+        try {
+            thread.join();
+            Log.i(TAG, "Reg Thread Succeed!");
+        } catch (Exception e) {
+            Log.e(TAG, "Reg Thread failed!");
+            e.printStackTrace();
+        }
+        return product_list;
     }
 }
