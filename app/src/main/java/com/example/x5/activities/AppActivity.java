@@ -16,6 +16,7 @@ public class AppActivity extends AppCompatActivity {
         ImageButton cart = findViewById(R.id.shopping_btn);
         cart.setImageResource(R.drawable.shopping_cart);
         ImageButton profile = findViewById(R.id.profile_btn);
+        profile.setImageResource(R.drawable.user);
     }
 
     @Override
@@ -32,6 +33,22 @@ public class AppActivity extends AppCompatActivity {
             public void onClick(View v) {
                 setDefaultImages();
                 quests_btn.setImageResource(R.drawable.bookmark_red);
+            }
+        });
+
+        profile_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDefaultImages();
+                profile_btn.setImageResource(R.drawable.user_red);
+            }
+        });
+
+        cart_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDefaultImages();
+                cart_button.setImageResource(R.drawable.shopping_cart_red);
             }
         });
     }

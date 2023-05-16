@@ -43,7 +43,7 @@
             android:layout_weight="1"
             android:background="@drawable/gray_outline"
             android:contentDescription="@string/profile"
-            app:srcCompat="@drawable/user_red" />
+            app:srcCompat="@drawable/user" />
 
         <ImageButton
             android:id="@+id/shopping_btn"
