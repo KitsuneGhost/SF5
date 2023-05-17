@@ -16,6 +16,7 @@ public class functions {
         return et.getText().toString().length() < 8;
     }
 
+    // получаем списоек имен из ArrayList c данными о продукте
     public String[] get_names(ArrayList<String[]> arrayList) {
         String[] names = new String[arrayList.size()];
         for (int i = 0; i < arrayList.size(); i++) {
@@ -24,11 +25,21 @@ public class functions {
         return names;
     }
 
+    // аналогично методу get_names, но с ценами
     public String[] get_prices(ArrayList<String[]> arrayList) {
         String[] prices = new String[arrayList.size()];
         for (int i = 0; i < arrayList.size(); i++) {
-            prices[i] = arrayList.get(i)[1];
+            prices[i] = arrayList.get(i)[1] + "$";
         }
         return prices;
+    }
+
+    // аналогично методу get_names, но с инфой по продуктам
+    public String[] get_info(ArrayList<String[]> arrayList) {
+        String[] infos = new String[arrayList.size()];
+        for (int i = 0; i < arrayList.size(); i++) {
+            infos[i] = arrayList.get(i)[2];
+        }
+        return infos;
     }
 }

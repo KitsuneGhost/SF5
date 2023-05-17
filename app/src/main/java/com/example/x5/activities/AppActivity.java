@@ -11,6 +11,8 @@ import android.widget.ImageButton;
 import com.example.x5.DataBaseHelper;
 import com.example.x5.R;
 import com.example.x5.fragments.CartFragment;
+import com.example.x5.fragments.ProfileFragment;
+import com.example.x5.fragments.QuestsFragment;
 
 public class AppActivity extends AppCompatActivity {
 
@@ -35,7 +37,8 @@ public class AppActivity extends AppCompatActivity {
         DataBaseHelper db = new DataBaseHelper();
 
         CartFragment cartFragment = new CartFragment();
-
+        ProfileFragment profileFragment = new ProfileFragment();
+        QuestsFragment questsFragment = new QuestsFragment();
         ft.add(R.id.fragmentLayout, cartFragment);
         ft.commit();
 
@@ -48,6 +51,9 @@ public class AppActivity extends AppCompatActivity {
             public void onClick(View v) {
                 setDefaultImages();
                 quests_btn.setImageResource(R.drawable.bookmark_red);
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.fragmentLayout, questsFragment);
+                ft.commit();
             }
         });
 
@@ -56,6 +62,9 @@ public class AppActivity extends AppCompatActivity {
             public void onClick(View v) {
                 setDefaultImages();
                 profile_btn.setImageResource(R.drawable.user_red);
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.fragmentLayout, profileFragment);
+                ft.commit();
             }
         });
 
@@ -64,6 +73,10 @@ public class AppActivity extends AppCompatActivity {
             public void onClick(View v) {
                 setDefaultImages();
                 cart_button.setImageResource(R.drawable.shopping_cart_red);
+
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.fragmentLayout, cartFragment);
+                ft.commit();
             }
         });
     }

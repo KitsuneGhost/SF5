@@ -11,4 +11,5 @@
     <string name="product_name">Название</string>
     <string name="product_price">Цена</string>
     <string name="photo">Фото</string>
+    <string name="info">Информация</string>
 </resources>
