@@ -42,4 +42,12 @@ public class functions {
         }
         return infos;
     }
+
+    public boolean username_is_empty (String username) {
+        return username.equals("");
+    }
+
+    public boolean usernameIsNotFilled (String username) {
+        return username.equals("Введите новый ник");
+    }
 }

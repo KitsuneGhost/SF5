@@ -1,14 +1,211 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
 
+        <View
+            android:id="@+id/settings_outline"
+            android:layout_width="375sp"
+            android:layout_height="470sp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/light_gray_outline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_outline" />
+
+        <View
+            android:id="@+id/profile_outline"
+            android:layout_width="375sp"
+            android:layout_height="170sp"
+            android:background="@drawable/light_gray_outline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/avatar"
+            android:layout_width="60sp"
+            android:layout_height="60sp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/circle"
+            app:layout_constraintStart_toStartOf="@+id/profile_outline"
+            app:layout_constraintTop_toTopOf="@+id/profile_outline" />
+
+        <View
+            android:id="@+id/username_outline"
+            android:layout_width="270sp"
+            android:layout_height="60sp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/gray_outline"
+            app:layout_constraintStart_toEndOf="@+id/avatar"
+            app:layout_constraintTop_toTopOf="@+id/profile_outline" />
+
+        <View
+            android:id="@+id/level_outline"
+            android:layout_width="355sp"
+            android:layout_height="60sp"
+            android:background="@drawable/gray_outline"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_outline"
+            app:layout_constraintEnd_toEndOf="@+id/profile_outline"
+            app:layout_constraintStart_toStartOf="@+id/profile_outline"
+            app:layout_constraintTop_toBottomOf="@+id/username_outline"
+            app:layout_constraintVertical_bias="0.619" />
+
+        <View
+            android:id="@+id/theme_outline"
+            android:layout_width="355sp"
+            android:layout_height="60sp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/gray_outline"
+            app:layout_constraintEnd_toEndOf="@+id/settings_outline"
+            app:layout_constraintStart_toStartOf="@+id/settings_outline"
+            app:layout_constraintTop_toTopOf="@+id/settings_outline" />
+
+        <View
+            android:id="@+id/change_un_outline"
+            android:layout_width="355sp"
+            android:layout_height="60sp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/gray_outline"
+            app:layout_constraintEnd_toEndOf="@+id/settings_outline"
+            app:layout_constraintStart_toStartOf="@+id/settings_outline"
+            app:layout_constraintTop_toBottomOf="@+id/theme_outline" />
+
+        <View
+            android:id="@+id/vkid_outline"
+            android:layout_width="355sp"
+            android:layout_height="60sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/gray_outline"
+            app:layout_constraintEnd_toEndOf="@+id/change_un_outline"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/settings_outline"
+            app:layout_constraintTop_toBottomOf="@+id/change_un_outline" />
+
+        <TextView
+            android:id="@+id/firstLetter_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:text="U"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/avatar"
+            app:layout_constraintTop_toTopOf="@+id/avatar" />
+
+        <TextView
+            android:id="@+id/UserName_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="UserName"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/username_outline"
+            app:layout_constraintHorizontal_bias="0.489"
+            app:layout_constraintStart_toStartOf="@+id/username_outline"
+            app:layout_constraintTop_toTopOf="@+id/username_outline" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@android:style/Widget.DeviceDefault.ProgressBar.Horizontal"
+            android:layout_width="150sp"
+            android:layout_height="50sp"
+            app:layout_constraintBottom_toBottomOf="@+id/level_outline"
+            app:layout_constraintEnd_toEndOf="@+id/level_outline"
+            app:layout_constraintStart_toEndOf="@+id/level_tv"
+            app:layout_constraintTop_toTopOf="@+id/level_outline" />
+
+        <TextView
+            android:id="@+id/level_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/level"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/level_outline"
+            app:layout_constraintStart_toStartOf="@+id/level_outline"
+            app:layout_constraintTop_toTopOf="@+id/level_outline"
+            app:layout_constraintVertical_bias="0.515" />
+
+        <TextView
+            android:id="@+id/theme_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/theme"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/theme_outline"
+            app:layout_constraintStart_toStartOf="@+id/theme_outline"
+            app:layout_constraintTop_toTopOf="@+id/theme_outline"
+            app:layout_constraintVertical_bias="0.515" />
+
+        <Switch
+            android:id="@+id/theme_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:minHeight="48dp"
+            android:text="Светлая"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/theme_outline"
+            app:layout_constraintEnd_toEndOf="@+id/theme_outline"
+            app:layout_constraintTop_toTopOf="@+id/theme_outline" />
+
+        <TextView
+            android:id="@+id/change_username_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/change_username"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/change_un_outline"
+            app:layout_constraintStart_toStartOf="@+id/change_un_outline"
+            app:layout_constraintTop_toTopOf="@+id/change_un_outline"
+            app:layout_constraintVertical_bias="0.515" />
+
+        <Button
+            android:id="@+id/change_username_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/red_outline"
+            android:text="@string/change"
+            app:layout_constraintBottom_toBottomOf="@+id/change_un_outline"
+            app:layout_constraintEnd_toEndOf="@+id/change_un_outline"
+            app:layout_constraintTop_toTopOf="@+id/change_un_outline" />
+
+        <TextView
+            android:id="@+id/vkid_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Сменить VK_id"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/vkid_outline"
+            app:layout_constraintStart_toStartOf="@+id/vkid_outline"
+            app:layout_constraintTop_toTopOf="@+id/vkid_outline" />
+
+        <Button
+            android:id="@+id/vkid_change_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="48sp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/red_outline"
+            android:text="@string/change"
+            app:layout_constraintBottom_toBottomOf="@+id/vkid_outline"
+            app:layout_constraintEnd_toEndOf="@+id/vkid_outline"
+            app:layout_constraintTop_toTopOf="@+id/vkid_outline" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

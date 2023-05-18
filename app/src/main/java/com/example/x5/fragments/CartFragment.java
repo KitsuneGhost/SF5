@@ -3,7 +3,6 @@ package com.example.x5.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.x5.DataBaseHelper;
 import com.example.x5.R;
@@ -23,13 +21,11 @@ import java.util.ArrayList;
 
 public class CartFragment extends Fragment {
 
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_cart, container, false);
     }
 
-    @Override
     public void onViewCreated (View view,  Bundle savedInstanceState) {
         DataBaseHelper db = new DataBaseHelper();
         functions f = new functions();

@@ -44,6 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
                     int hashcoded_password = password_editText_r.getText().toString().hashCode();
                     DBHelper.register(login, hashcoded_password); // вызываем функцию для регистрации
                     Intent Intent = new Intent(RegisterActivity.this, AppActivity.class);
+                    Intent.putExtra("login_key", login);
                     RegisterActivity.this.startActivity(Intent); //переход в app Activity
                 }
             }

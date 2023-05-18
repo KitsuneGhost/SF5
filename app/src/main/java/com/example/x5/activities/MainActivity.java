@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                     int password = password_editText_l.getText().toString().hashCode();
                     if (db.check_login(login, password)) {  // проверка пароля
                         Intent Intent = new Intent(MainActivity.this, AppActivity.class);
+                        Intent.putExtra("login_key", login);
                         MainActivity.this.startActivity(Intent); //переход в другую активность
                     } else {
                         Toast.makeText(getApplicationContext(), "Неверный логин или пароль!",

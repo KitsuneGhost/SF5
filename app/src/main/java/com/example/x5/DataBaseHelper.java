@@ -9,6 +9,12 @@ import java.util.ArrayList;
 
 public class DataBaseHelper {
     private Connection connection;
+
+    public String user_login;
+    public String Username = "error";
+    public int xp;
+    public int level;
+
     private Boolean success; // нужен для работыфункции check_login (в ней будет храниться результат ее работы)
 
     private static final String TAG = "DBHelper"; // тег для LogCat
@@ -24,7 +30,14 @@ public class DataBaseHelper {
 
     public DataBaseHelper() {  // конструктор
         this.url = String.format(this.url, this.host, this.port, this.database); // формируем полную ссылку
-        connect(); // вызов метода connect(), он описан ниже
+    }
+
+    public void setUser_login(String login) {
+        this.user_login = login;
+    }
+
+    public String getUser_login() {
+        return this.user_login;
     }
 
     private void connect() {
@@ -59,9 +72,12 @@ public class DataBaseHelper {
             @Override
             public void run() { // переопределяем метод
                 try {
+                    connect();
                     String query = "INSERT INTO users (id, login, password) VALUES (1, '"  + login
                             + "', " + password + ")"; // SQL запрос в бд
-                    connection.createStatement().executeQuery(query);
+                    connection.createStatement().executeUpdate(query);
+                    setUser_login(login);
+                    connection.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -84,16 +100,23 @@ public class DataBaseHelper {
             @Override
             public void run() { // переопределяем метод
                 try {
+                    connect();
                     String query = "SELECT password FROM users WHERE login = '" + login + "'"; // SQL запрос в бд
                     ResultSet resultSet = connection.createStatement().executeQuery(query); // выполняем запрос
 
                     while (resultSet.next()) {
                         int rs_password = resultSet.getInt("password"); // получаем пароль из resultSet
                         success = rs_password == password; // сравниваем пароли и присваем резултат success
+                        if (success) {
+                            setUser_login(login);
+                        }
                     }
+                    Log.i(TAG, "Login checked");
                     resultSet.close();
+                    connection.close();
 
                 } catch (Exception e) {
+                    Log.e(TAG, "Login check failed");
                     e.printStackTrace();
                     success = false;
                 }
@@ -104,10 +127,10 @@ public class DataBaseHelper {
 
         try { // отчет о потоке
             thread.join();
-            Log.i(TAG, "Reg Thread Succeed!");
+            Log.i(TAG, "Check_login Thread Succeed!");
             return success;
         } catch (Exception e) {
-            Log.e(TAG, "Reg Thread failed!");
+            Log.e(TAG, "Check_login Thread failed!");
             e.printStackTrace();
             return false;
         }
@@ -119,6 +142,7 @@ public class DataBaseHelper {
             @Override
             public void run() {
                 try {
+                    connect();
                     String query = "SELECT * FROM products";
                     ResultSet resultSet = connection.createStatement().executeQuery(query);
 
@@ -130,6 +154,7 @@ public class DataBaseHelper {
                         product_list.add(list);
                     }
                     resultSet.close();
+                    connection.close();
                     Log.i(TAG, "Got product list!");
                 } catch (Exception e) {
                     Log.e(TAG, "Did not get product list!");
@@ -141,11 +166,147 @@ public class DataBaseHelper {
 
         try {
             thread.join();
-            Log.i(TAG, "Reg Thread Succeed!");
+            Log.i(TAG, "GetProductList Thread Succeed!");
         } catch (Exception e) {
-            Log.e(TAG, "Reg Thread failed!");
+            Log.e(TAG, "GetProductList  Thread failed!");
             e.printStackTrace();
         }
         return product_list;
+    }
+
+    public String get_username () {
+        Thread thread = new Thread(new Runnable() { // создаем экземпляр
+            @Override
+            public void run() { // переопределяем метод
+                try {
+                    connect();
+                    String query = "SELECT * FROM users WHERE login = '" + user_login + "'"; // SQL запрос в бд
+                    ResultSet resultSet = connection.createStatement().executeQuery(query); // выполняем запрос
+
+                    while (resultSet.next()) {
+                        Username = resultSet.getString("username");
+                    }
+                    resultSet.close();
+                    connection.close();
+                    Log.i(TAG, "Got Username");
+
+                } catch (Exception e) {
+                    Log.e(TAG, "Did not get Username!");
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start(); // запуск потока
+
+        try { // отчет о потоке
+            thread.join();
+            Log.i(TAG, "Get_Username Thread Succeed!");
+            return this.Username;
+        } catch (Exception e) {
+            Log.e(TAG, "Get_username Thread failed!");
+            e.printStackTrace();
+            return this.Username;
+        }
+    }
+
+
+    public void update_username(String username) {
+        Thread thread = new Thread(new Runnable() { // создаем экземпляр
+            @Override
+            public void run() { // переопределяем метод
+                try {
+                    connect();
+                    String query = "UPDATE users SET username = '" + username + "' WHERE login = '"
+                            + user_login + "'"; // SQL запрос в бд
+                    connection.createStatement().executeUpdate(query); // выполняем запрос
+                    Log.i(TAG, "Username updated!");
+                    connection.close();
+                } catch (Exception e) {
+                    Log.e(TAG, "Could not update username!");
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start(); // запуск потока
+
+        try { // отчет о потоке
+            thread.join();
+            Log.i(TAG, "Update_Username Thread Succeed!");
+        } catch (Exception e) {
+            Log.e(TAG, "Update_Username Thread failed!");
+            e.printStackTrace();
+        }
+    }
+
+    public int get_level() {
+        Thread thread = new Thread(new Runnable() { // создаем экземпляр
+            @Override
+            public void run() { // переопределяем метод
+                try {
+                    connect();
+                    String query = "SELECT level FROM users WHERE login = '" + user_login + "'"; // SQL запрос в бд
+                    ResultSet resultSet = connection.createStatement().executeQuery(query); // выполняем запрос
+
+                    while (resultSet.next()) {
+                        level = resultSet.getInt("level");
+                    }
+                    Log.i(TAG, "Got level!");
+                    connection.close();
+                } catch (Exception e) {
+                    level = 0;
+                    Log.e(TAG, "Could not get level!");
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start(); // запуск потока
+
+        try { // отчет о потоке
+            thread.join();
+            Log.i(TAG, "get_level Thread Succeed!");
+        } catch (Exception e) {
+            Log.e(TAG, "get_level Thread failed!");
+            level = 0;
+            e.printStackTrace();
+        }
+        return level;
+    }
+
+    public int get_xp() {
+        Thread thread = new Thread(new Runnable() { // создаем экземпляр
+            @Override
+            public void run() { // переопределяем метод
+                try {
+                    connect();
+                    String query = "SELECT xp FROM users WHERE login = '" + user_login + "'"; // SQL запрос в бд
+                    ResultSet resultSet = connection.createStatement().executeQuery(query); // выполняем запрос
+
+                    while (resultSet.next()) {
+                        xp = resultSet.getInt("xp");
+                    }
+                    Log.i(TAG, "Got xp!");
+                    connection.close();
+                } catch (Exception e) {
+                    xp = 0;
+                    Log.e(TAG, "Could not get xp!");
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start(); // запуск потока
+
+        try { // отчет о потоке
+            thread.join();
+            Log.i(TAG, "get_xp Thread Succeed!");
+        } catch (Exception e) {
+            Log.e(TAG, "get_xp Thread failed!");
+            xp = 0;
+            e.printStackTrace();
+        }
+        return xp;
     }
 }

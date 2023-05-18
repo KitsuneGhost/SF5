@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">x5</string>
+    <string name="app_name">StudyFor5</string>
     <string name="login_et">Логин</string>
     <string name="password_et">Пароль</string>
     <string name="log_in">Войти</string>
@@ -12,4 +12,9 @@
     <string name="product_price">Цена</string>
     <string name="photo">Фото</string>
     <string name="info">Информация</string>
+    <string name="level">Уровень:</string>
+    <string name="change_username">Сменить Ник</string>
+    <string name="theme">Тема Приложения</string>
+    <string name="change">Поменять</string>
+    <string name="cancel">Отмена</string>
 </resources>
