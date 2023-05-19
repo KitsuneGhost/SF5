@@ -43,10 +43,12 @@ public class functions {
         return infos;
     }
 
+    // проверка никнейма
     public boolean username_is_empty (String username) {
         return username.equals("");
     }
 
+    // проверка никнейма №2
     public boolean usernameIsNotFilled (String username) {
         return username.equals("Введите новый ник");
     }

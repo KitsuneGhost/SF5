@@ -92,6 +92,16 @@
             app:layout_constraintStart_toStartOf="@+id/settings_outline"
             app:layout_constraintTop_toBottomOf="@+id/change_un_outline" />
 
+        <View
+            android:id="@+id/delte_view"
+            android:layout_width="355sp"
+            android:layout_height="60sp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/gray_outline"
+            app:layout_constraintEnd_toEndOf="@+id/settings_outline"
+            app:layout_constraintStart_toStartOf="@+id/settings_outline"
+            app:layout_constraintTop_toBottomOf="@+id/vkid_outline" />
+
         <TextView
             android:id="@+id/firstLetter_tv"
             android:layout_width="wrap_content"
@@ -110,6 +120,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="UserName"
+            android:textColor="@color/ui_gray"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="@+id/username_outline"
             app:layout_constraintHorizontal_bias="0.489"
@@ -132,6 +143,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@string/level"
+            android:textColor="@color/ui_gray"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/level_outline"
             app:layout_constraintStart_toStartOf="@+id/level_outline"
@@ -144,6 +156,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@string/theme"
+            android:textColor="@color/ui_gray"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/theme_outline"
             app:layout_constraintStart_toStartOf="@+id/theme_outline"
@@ -157,6 +170,7 @@
             android:layout_marginEnd="16dp"
             android:minHeight="48dp"
             android:text="Светлая"
+            android:textColor="@color/ui_gray"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/theme_outline"
             app:layout_constraintEnd_toEndOf="@+id/theme_outline"
@@ -168,6 +182,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@string/change_username"
+            android:textColor="@color/ui_gray"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/change_un_outline"
             app:layout_constraintStart_toStartOf="@+id/change_un_outline"
@@ -191,6 +206,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="Сменить VK_id"
+            android:textColor="@color/ui_gray"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/vkid_outline"
             app:layout_constraintStart_toStartOf="@+id/vkid_outline"
@@ -206,6 +222,29 @@
             app:layout_constraintBottom_toBottomOf="@+id/vkid_outline"
             app:layout_constraintEnd_toEndOf="@+id/vkid_outline"
             app:layout_constraintTop_toTopOf="@+id/vkid_outline" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/delete"
+            android:textColor="@color/ui_gray"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/delte_view"
+            app:layout_constraintStart_toStartOf="@+id/delte_view"
+            app:layout_constraintTop_toTopOf="@+id/delte_view" />
+
+        <Button
+            android:id="@+id/delete_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/red_outline"
+            android:text="@string/delete_btn"
+            app:layout_constraintBottom_toBottomOf="@+id/delte_view"
+            app:layout_constraintEnd_toEndOf="@+id/delte_view"
+            app:layout_constraintTop_toTopOf="@+id/delte_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

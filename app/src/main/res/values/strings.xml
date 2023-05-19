@@ -15,6 +15,11 @@
     <string name="level">Уровень:</string>
     <string name="change_username">Сменить Ник</string>
     <string name="theme">Тема Приложения</string>
-    <string name="change">Поменять</string>
+    <string name="delete">Удаление аккаунта</string>
+    <string name="change">Сменить</string>
     <string name="cancel">Отмена</string>
+    <string name="delete_btn">Удалить</string>
+    <string name="question">Удалить аккаунт?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
 </resources>

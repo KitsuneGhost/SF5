@@ -11,7 +11,7 @@ public class DataBaseHelper {
     private Connection connection;
 
     public String user_login;
-    public String Username = "error";
+    public String Username = "Никнейм";
     public int xp;
     public int level;
 
@@ -34,10 +34,6 @@ public class DataBaseHelper {
 
     public void setUser_login(String login) {
         this.user_login = login;
-    }
-
-    public String getUser_login() {
-        return this.user_login;
     }
 
     private void connect() {
@@ -308,5 +304,33 @@ public class DataBaseHelper {
             e.printStackTrace();
         }
         return xp;
+    }
+
+    public void delete_account() {
+        Thread thread = new Thread(new Runnable() { // создаем экземпляр
+            @Override
+            public void run() { // переопределяем метод
+                try {
+                    connect();
+                    String query = "DELETE FROM users WHERE login = '" + user_login + "'"; // SQL запрос в бд
+                    connection.createStatement().executeUpdate(query); // выполняем запрос
+                    Log.i(TAG, "Account_deleted!");
+                    connection.close();
+                } catch (Exception e) {
+                    Log.e(TAG, "Could not delete account!");
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start(); // запуск потока
+
+        try { // отчет о потоке
+            thread.join();
+            Log.i(TAG, "delete Thread Succeed!");
+        } catch (Exception e) {
+            Log.e(TAG, "delete Thread failed!");
+            e.printStackTrace();
+        }
     }
 }
