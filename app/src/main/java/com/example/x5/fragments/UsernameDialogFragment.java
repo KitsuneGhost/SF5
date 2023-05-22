@@ -1,5 +1,7 @@
 package com.example.x5.fragments;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +14,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.x5.DataBaseHelper;
 import com.example.x5.R;
-import com.example.x5.functions;
+import com.example.x5.Functions;
 
 public class UsernameDialogFragment extends DialogFragment {
     String TAG = "Username Fragment";
@@ -24,6 +26,7 @@ public class UsernameDialogFragment extends DialogFragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable (Color.TRANSPARENT));
         return inflater.inflate(R.layout.username_fragment, container, false);
     }
 
@@ -32,7 +35,7 @@ public class UsernameDialogFragment extends DialogFragment {
         Button change = view.findViewById(R.id.change_button);
         Button cancel = view.findViewById(R.id.cancel_button);
 
-        functions f = new functions();
+        Functions f = new Functions();
 
         change.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,6 +49,10 @@ public class UsernameDialogFragment extends DialogFragment {
                 } else if (f.usernameIsNotFilled(username)) {
                    Toast.makeText(getActivity().getApplicationContext(),
                            "Вы не заполнили поле!", Toast.LENGTH_SHORT).show();
+                } else if (f.usernameIsTooLong(username)) {
+                    Toast.makeText(getActivity().getApplicationContext(),
+                            "Ник слишком длинный! Максимум символов:8.",
+                            Toast.LENGTH_SHORT).show();
                 } else {
                     DataBaseHelper db = new DataBaseHelper();
                     db.setUser_login(login);

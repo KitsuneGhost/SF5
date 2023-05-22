@@ -55,6 +55,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text="@string/login_et"
+        android:background="@null"
         app:layout_constraintBottom_toBottomOf="@+id/login_outline_l"
         app:layout_constraintEnd_toEndOf="@+id/login_outline_l"
         app:layout_constraintStart_toStartOf="@+id/login_outline_l" />
@@ -63,6 +64,7 @@
         android:id="@+id/password_editText_l"
         android:layout_width="220sp"
         android:layout_height="50sp"
+        android:background="@null"
         android:ems="10"
         android:inputType="textPassword"
         android:text="@string/password_et"

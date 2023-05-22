@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.x5.DataBaseHelper;
 import com.example.x5.R;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 
@@ -24,13 +25,17 @@ public class ProfileFragment extends Fragment {
     String login;
     String username;
     String level;
+    int xp;
     DataBaseHelper db = new DataBaseHelper();
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         login = getArguments().getString("login_key"); // получаем логин из AppActivity
         db.setUser_login(login);
-        username = db.get_username();
+        ArrayList<String> data = db.profile_fragment_setup();
+        username = data.get(0);
+        level = data.get(1);
+        xp = Integer.parseInt(data.get(2));
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
@@ -42,12 +47,12 @@ public class ProfileFragment extends Fragment {
         ProgressBar level_bar = view.findViewById(R.id.progressBar);
         Switch switch_theme = view.findViewById(R.id.theme_switch);
 
-        level = level_tv.getText().toString() + " " + db.get_level(); // получаем уровень из бд
+        level = level_tv.getText().toString() + " " + level; // получаем уровень из бд
         ChangeUsername(username); // меняем ник на text view
 
         level_tv.setText(level); // выводин на экран уровень
         level_bar.setMax(100); // задаем максимальное количество опыта
-        level_bar.setProgress(db.get_xp()); // заполняем progressbar
+        level_bar.setProgress(xp); // заполняем progressbar
 
         change_un_btn.setOnClickListener(new View.OnClickListener() {
             @Override

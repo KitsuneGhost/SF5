@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.example.x5.DataBaseHelper;
 import com.example.x5.R;
-import com.example.x5.functions;
+import com.example.x5.Functions;
 
 import java.util.ArrayList;
 
@@ -28,7 +28,7 @@ public class CartFragment extends Fragment {
 
     public void onViewCreated (View view,  Bundle savedInstanceState) {
         DataBaseHelper db = new DataBaseHelper();
-        functions f = new functions();
+        Functions f = new Functions();
 
         ListView product_list = getView().findViewById(R.id.product_list);
 

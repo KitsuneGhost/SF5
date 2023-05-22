@@ -1,14 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.QuestsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
 
+        <View
+            android:id="@+id/tasks_light_view"
+            android:layout_width="375sp"
+            android:layout_height="270sp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/light_gray_outline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/tasks_view"
+            android:layout_width="310sp"
+            android:layout_height="40sp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/gray_outline"
+            app:layout_constraintEnd_toEndOf="@+id/tasks_light_view"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toStartOf="@+id/tasks_light_view"
+            app:layout_constraintTop_toTopOf="@+id/tasks_light_view" />
+
+        <View
+            android:id="@+id/tasks_view2"
+            android:layout_width="340sp"
+            android:layout_height="185sp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/gray_outline"
+            app:layout_constraintEnd_toEndOf="@+id/tasks_light_view"
+            app:layout_constraintHorizontal_bias="0.485"
+            app:layout_constraintStart_toStartOf="@+id/tasks_light_view"
+            app:layout_constraintTop_toBottomOf="@+id/tasks_view" />
+
+        <TextView
+            android:id="@+id/Tasks_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tasks"
+            android:textColor="@color/ui_gray"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tasks_view"
+            app:layout_constraintEnd_toEndOf="@+id/tasks_view"
+            app:layout_constraintStart_toStartOf="@+id/tasks_view"
+            app:layout_constraintTop_toTopOf="@+id/tasks_view" />
+
+        <View
+            android:id="@+id/combos_view"
+            android:layout_width="375sp"
+            android:layout_height="360sp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/light_gray_outline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.444"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tasks_light_view" />
+
+        <View
+            android:id="@+id/combos_tv_view"
+            android:layout_width="310sp"
+            android:layout_height="40sp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/gray_outline"
+            app:layout_constraintEnd_toEndOf="@+id/combos_view"
+            app:layout_constraintStart_toStartOf="@+id/combos_view"
+            app:layout_constraintTop_toTopOf="@+id/combos_view" />
+
+        <View
+            android:id="@+id/combos_list_view"
+            android:layout_width="340sp"
+            android:layout_height="270sp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/gray_outline"
+            app:layout_constraintEnd_toEndOf="@+id/combos_view"
+            app:layout_constraintStart_toStartOf="@+id/combos_view"
+            app:layout_constraintTop_toBottomOf="@+id/combos_tv_view" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/combos"
+            android:textColor="@color/ui_gray"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/combos_tv_view"
+            app:layout_constraintEnd_toEndOf="@+id/combos_tv_view"
+            app:layout_constraintStart_toStartOf="@+id/combos_tv_view"
+            app:layout_constraintTop_toTopOf="@+id/combos_tv_view" />
+
+        <TextView
+            android:id="@+id/tasks_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Здесь будут задания"
+            android:textColor="@color/ui_gray"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/tasks_view2"
+            app:layout_constraintStart_toStartOf="@+id/tasks_view2"
+            app:layout_constraintTop_toTopOf="@+id/tasks_view2" />
+
+        <TextView
+            android:id="@+id/combos_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Здесь будут комбо"
+            android:textColor="@color/ui_gray"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@+id/combos_list_view"
+            app:layout_constraintStart_toStartOf="@+id/combos_list_view"
+            app:layout_constraintTop_toTopOf="@+id/combos_list_view" />
+
+        <Button
+            android:id="@+id/info_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/red_outline"
+            android:text="@string/info"
+            app:layout_constraintBottom_toBottomOf="@+id/combos_list_view"
+            app:layout_constraintEnd_toEndOf="@+id/combos_list_view"
+            app:layout_constraintStart_toStartOf="@+id/combos_list_view" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

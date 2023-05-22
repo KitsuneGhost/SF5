@@ -4,7 +4,7 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
-public class functions {
+public class Functions {
     // проверка на пустые и незаполненные поля
     public Boolean is_not_filled(EditText et) {
         return et.getText().toString().equals("") || et.getText().toString().equals("Пароль")
@@ -51,5 +51,9 @@ public class functions {
     // проверка никнейма №2
     public boolean usernameIsNotFilled (String username) {
         return username.equals("Введите новый ник");
+    }
+
+    public boolean usernameIsTooLong (String username) {
+        return username.length() > 8;
     }
 }

@@ -24,6 +24,7 @@
             android:id="@+id/profile_outline"
             android:layout_width="375sp"
             android:layout_height="170sp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/light_gray_outline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

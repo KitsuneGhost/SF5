@@ -22,4 +22,6 @@
     <string name="question">Удалить аккаунт?</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
+    <string name="tasks">Задания</string>
+    <string name="combos">Комбо</string>
 </resources>

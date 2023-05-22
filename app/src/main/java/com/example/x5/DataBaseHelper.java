@@ -20,11 +20,11 @@ public class DataBaseHelper {
     private static final String TAG = "DBHelper"; // тег для LogCat
 
     // парметры сервера и бд (в качестве сервера я пока использую локальный)
-    private final String host = "10.0.2.2"; // localhost и мой IP не работают
-    private final String database = "StudyFor5_DB"; // имя бд
-    private final int port = 5432; // порт сервера
-    private final String user = "postgres"; // пользователь
-    private final String pass = "i3J!PqPz"; // пароль
+    private final String host = "10.0.2.2"; //10.0.2.2 , arjuna.db.elephantsql.com
+    private final String database = "StudyFor5_DB"; //StudyFor5_DB , axjtwpko
+    private final int port = 5432;
+    private final String user = "postgres"; //postgres , axjtwpko
+    private final String pass = "i3J!PqPz"; //i3J!PqPz , jmrDkPhQZ2mAtofxsrgCPku47IM5xVxs
 
     private String url = "jdbc:postgresql://%s:%d/%s"; // строка-шаблон, для создания ссылки
 
@@ -69,7 +69,7 @@ public class DataBaseHelper {
             public void run() { // переопределяем метод
                 try {
                     connect();
-                    String query = "INSERT INTO users (id, login, password) VALUES (1, '"  + login
+                    String query = "INSERT INTO users (login, password) VALUES ('"  + login
                             + "', " + password + ")"; // SQL запрос в бд
                     connection.createStatement().executeUpdate(query);
                     setUser_login(login);
@@ -332,5 +332,42 @@ public class DataBaseHelper {
             Log.e(TAG, "delete Thread failed!");
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<String> profile_fragment_setup () {
+        ArrayList<String> data = new ArrayList<>();
+        Thread thread = new Thread(new Runnable() { // создаем экземпляр
+            @Override
+            public void run() { // переопределяем метод
+                try {
+                    connect();
+
+                    String query = "SELECT * from users WHERE login = '" + user_login + "'"; // SQL запрос в бд
+                    ResultSet resultSet = connection.createStatement().executeQuery(query); // выполняем запрос
+                    while (resultSet.next()) {
+                       data.add(resultSet.getString("username"));
+                       data.add("" + resultSet.getInt("level"));
+                       data.add("" + resultSet.getInt("xp"));
+                    }
+                    resultSet.close();
+                    Log.i(TAG, "Got data!");
+                } catch (Exception e) {
+                    Log.e(TAG, "Could not get data!");
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start(); // запуск потока
+
+        try { // отчет о потоке
+            thread.join();
+            Log.i(TAG, "Profile Thread Succeed!");
+        } catch (Exception e) {
+            Log.e(TAG, "Profile Thread failed!");
+            e.printStackTrace();
+            return null;
+        }
+        return data;
     }
 }

@@ -11,11 +11,11 @@ import android.widget.Toast;
 
 import com.example.x5.DataBaseHelper;
 import com.example.x5.R;
-import com.example.x5.functions;
+import com.example.x5.Functions;
 
 public class MainActivity extends AppCompatActivity {
 
-    functions f = new functions();
+    Functions f = new Functions();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +32,22 @@ public class MainActivity extends AppCompatActivity {
         register_button_l.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent Intent = new Intent(MainActivity.this, RegisterActivity.class);
-                MainActivity.this.startActivity(Intent); //переход в другую активность
+                if (f.is_not_filled(password_editText_l) || f.is_not_filled(login_editText_l)) {
+                    Toast.makeText(getApplicationContext(), "Какое-то из полей не заполнено!",
+                            Toast.LENGTH_SHORT).show(); // проверка полей
+                }
+                else if (f.eight_length(password_editText_l)) {
+                    Toast.makeText(getApplicationContext(), "В пароле меньше символов!",
+                            Toast.LENGTH_SHORT).show(); // проверка длины пароля
+                }
+                else {
+                    String login = login_editText_l.getText().toString();
+                    int hashcoded_password = password_editText_l.getText().toString().hashCode();
+                    db.register(login, hashcoded_password); // вызываем функцию для регистрации
+                    Intent Intent = new Intent(MainActivity.this, AppActivity.class);
+                    Intent.putExtra("login_key", login);
+                    MainActivity.this.startActivity(Intent); //переход в app Activity
+                }
             }
         });
 
