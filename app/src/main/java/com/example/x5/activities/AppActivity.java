@@ -4,9 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.x5.R;
 import com.example.x5.fragments.CartFragment;
@@ -16,14 +20,20 @@ import com.example.x5.fragments.QuestsFragment;
 public class AppActivity extends AppCompatActivity {
 
     protected void setDefaultImages() {
-        ImageButton quests = findViewById(R.id.quests_btn);
-        quests.setImageResource(R.drawable.bookmark);
+        ImageView quests_iv = findViewById(R.id.quests_iv);
+        TextView quests_tv = findViewById(R.id.quests_tv);
+        quests_iv.setImageResource(R.drawable.bookmark);
+        quests_tv.setTextColor(getResources().getColor(R.color.ui_gray));
 
-        ImageButton cart = findViewById(R.id.shopping_btn);
-        cart.setImageResource(R.drawable.shopping_cart);
+        ImageView cart_iv = findViewById(R.id.cart_iv);
+        TextView cart_tv = findViewById(R.id.cart_tv);
+        cart_iv.setImageResource(R.drawable.shopping_cart);
+        cart_tv.setTextColor(getResources().getColor(R.color.ui_gray));
 
-        ImageButton profile = findViewById(R.id.profile_btn);
-        profile.setImageResource(R.drawable.user);
+        ImageView profile_iv = findViewById(R.id.profile_iv);
+        TextView profile_tv = findViewById(R.id.profile_tv);
+        profile_iv.setImageResource(R.drawable.user);
+        profile_tv.setTextColor(getResources().getColor(R.color.ui_gray));
     }
 
     @Override
@@ -46,38 +56,46 @@ public class AppActivity extends AppCompatActivity {
         bundle.putString("login_key", login); // создаем передачу логина
         profileFragment.setArguments(bundle); // передаем логин в фрагмент
 
-        ImageButton profile_btn = findViewById(R.id.profile_btn);
-        ImageButton cart_button = findViewById(R.id.shopping_btn);
-        ImageButton quests_btn = findViewById(R.id.quests_btn);
+        LinearLayout profile_layout = findViewById(R.id.profile_layout);
+        LinearLayout quests_layout = findViewById(R.id.quests_layout);
+        LinearLayout cart_layout = findViewById(R.id.cart_layout);
 
-        quests_btn.setOnClickListener(new View.OnClickListener() {
+        quests_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setDefaultImages();
-                quests_btn.setImageResource(R.drawable.bookmark_red);
+                ImageView imageView = findViewById(R.id.quests_iv);
+                TextView textView = findViewById(R.id.quests_tv);
+                imageView.setImageResource(R.drawable.bookmark_red);
+                textView.setTextColor(getResources().getColor(R.color.ui_red));
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.fragmentLayout, questsFragment);
                 ft.commit();
             }
         });
 
-        profile_btn.setOnClickListener(new View.OnClickListener() {
+        profile_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setDefaultImages();
-                profile_btn.setImageResource(R.drawable.user_red);
+                ImageView imageView = findViewById(R.id.profile_iv);
+                TextView textView = findViewById(R.id.profile_tv);
+                imageView.setImageResource(R.drawable.user_red);
+                textView.setTextColor(getResources().getColor(R.color.ui_red));
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.fragmentLayout, profileFragment);
                 ft.commit();
             }
         });
 
-        cart_button.setOnClickListener(new View.OnClickListener() {
+        cart_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setDefaultImages();
-                cart_button.setImageResource(R.drawable.shopping_cart_red);
-
+                ImageView imageView = findViewById(R.id.cart_iv);
+                TextView textView = findViewById(R.id.cart_tv);
+                imageView.setImageResource(R.drawable.shopping_cart_red);
+                textView.setTextColor(getResources().getColor(R.color.ui_red));
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.fragmentLayout, cartFragment);
                 ft.commit();

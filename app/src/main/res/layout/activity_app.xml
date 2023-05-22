@@ -23,45 +23,97 @@
         app:layout_constraintBottom_toTopOf="@+id/bottom_menu_outline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </FrameLayout>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <LinearLayout
-        android:layout_width="360sp"
+        android:layout_width="match_parent"
         android:layout_height="70sp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="@+id/bottom_menu_outline"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/bottom_menu_outline"
-        app:layout_constraintTop_toTopOf="@+id/bottom_menu_outline">
+        app:layout_constraintStart_toStartOf="parent">
 
-        <ImageButton
-            android:id="@+id/profile_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/gray_outline"
-            android:contentDescription="@string/profile"
-            app:srcCompat="@drawable/user" />
+        <LinearLayout
+            android:id="@+id/profile_layout"
+            android:layout_width="136sp"
+            android:layout_height="70sp"
+            android:layout_marginBottom="28dp"
+            android:clickable="true"
+            android:orientation="vertical"
+            android:focusable="true">
 
-        <ImageButton
-            android:id="@+id/shopping_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/gray_outline"
-            android:contentDescription="@string/shopping"
-            app:srcCompat="@drawable/shopping_cart_red" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15sp" />
 
-        <ImageButton
-            android:id="@+id/quests_btn"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/profile_iv"
+                android:layout_width="match_parent"
+                android:layout_height="25sp"
+                app:srcCompat="@drawable/user" />
+
+            <TextView
+                android:id="@+id/profile_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/profile"
+                android:textAlignment="center"
+                android:textColor="@color/ui_gray" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cart_layout"
+            android:layout_width="136sp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/gray_outline"
-            android:contentDescription="@string/quests"
-            app:srcCompat="@drawable/bookmark" />
+            android:clickable="true"
+            android:orientation="vertical"
+            android:focusable="true">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15sp" />
+
+            <ImageView
+                android:id="@+id/cart_iv"
+                android:layout_width="match_parent"
+                android:layout_height="25sp"
+                app:srcCompat="@drawable/shopping_cart_red" />
+
+            <TextView
+                android:id="@+id/cart_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/shopping"
+                android:textAlignment="center"
+                android:textColor="@color/ui_red" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/quests_layout"
+            android:layout_width="136sp"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:orientation="vertical"
+            android:focusable="true">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="15sp" />
+
+            <ImageView
+                android:id="@+id/quests_iv"
+                android:layout_width="match_parent"
+                android:layout_height="25sp"
+                app:srcCompat="@drawable/bookmark" />
+
+            <TextView
+                android:id="@+id/quests_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/tasks"
+                android:textAlignment="center"
+                android:textColor="@color/ui_gray" />
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

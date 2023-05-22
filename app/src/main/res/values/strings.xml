@@ -6,7 +6,7 @@
     <string name="register">Зарегистрироваться</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="profile">Профиль</string>
-    <string name="shopping">Магазин</string>
+    <string name="shopping">Корзина</string>
     <string name="quests">Задания</string>
     <string name="product_name">Название</string>
     <string name="product_price">Цена</string>
