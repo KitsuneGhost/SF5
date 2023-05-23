@@ -20,11 +20,11 @@ public class DataBaseHelper {
     private static final String TAG = "DBHelper"; // тег для LogCat
 
     // парметры сервера и бд (в качестве сервера я пока использую локальный)
-    private final String host = "10.0.2.2"; //10.0.2.2 , arjuna.db.elephantsql.com
-    private final String database = "StudyFor5_DB"; //StudyFor5_DB , axjtwpko
+    private final String host = "balarama.db.elephantsql.com"; // 10.0.2.2 / arjuna.db.elephantsql.com / balarama.db.elephantsql.com
+    private final String database = "alnjrvin"; // StudyFor5_DB / axjtwpko / alnjrvin
     private final int port = 5432;
-    private final String user = "postgres"; //postgres , axjtwpko
-    private final String pass = "i3J!PqPz"; //i3J!PqPz , jmrDkPhQZ2mAtofxsrgCPku47IM5xVxs
+    private final String user = "alnjrvin"; // postgres , axjtwpko, / alnjrvin
+    private final String pass = "hIU8zyNQynyyyaBrZYy4sZ_l3IetE4EB"; // i3J!PqPz / jmrDkPhQZ2mAtofxsrgCPku47IM5xVxs / hIU8zyNQynyyyaBrZYy4sZ_l3IetE4EB
 
     private String url = "jdbc:postgresql://%s:%d/%s"; // строка-шаблон, для создания ссылки
 

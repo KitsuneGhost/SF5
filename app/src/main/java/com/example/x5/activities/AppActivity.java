@@ -4,20 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.x5.DataBaseHelper;
 import com.example.x5.R;
 import com.example.x5.fragments.CartFragment;
 import com.example.x5.fragments.ProfileFragment;
 import com.example.x5.fragments.QuestsFragment;
 
+import java.util.ArrayList;
+
 public class AppActivity extends AppCompatActivity {
+    DataBaseHelper db = new DataBaseHelper();
 
     protected void setDefaultImages() {
         ImageView quests_iv = findViewById(R.id.quests_iv);
@@ -41,20 +43,23 @@ public class AppActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app);
 
+        Bundle arguments = getIntent().getExtras(); // получаем интент из предыдущей активности
+        String login = arguments.get("login_key").toString(); // получаем логин из интента
+
+        db.setUser_login(login);
+
+        ArrayList<String[]> products = db.getProductList();
+        ArrayList<String> data = db.profile_fragment_setup();
+
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
-        CartFragment cartFragment = new CartFragment();
-        ProfileFragment profileFragment = new ProfileFragment();
+        CartFragment cartFragment = new CartFragment(products);
+        ProfileFragment profileFragment = new ProfileFragment(data, login);
+
         QuestsFragment questsFragment = new QuestsFragment();
         ft.add(R.id.fragmentLayout, cartFragment);
         ft.commit();
-
-        Bundle arguments = getIntent().getExtras(); // получаем интент из предыдущей активности
-        String login = arguments.get("login_key").toString(); // получаем логин из интента
-        Bundle bundle = new Bundle();
-        bundle.putString("login_key", login); // создаем передачу логина
-        profileFragment.setArguments(bundle); // передаем логин в фрагмент
 
         LinearLayout profile_layout = findViewById(R.id.profile_layout);
         LinearLayout quests_layout = findViewById(R.id.quests_layout);

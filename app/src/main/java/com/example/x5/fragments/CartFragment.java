@@ -20,21 +20,28 @@ import java.util.ArrayList;
 
 
 public class CartFragment extends Fragment {
+    DataBaseHelper db = new DataBaseHelper();
+    Functions f = new Functions();
+    ArrayList<String[]> products; // получаем данные из бд
+    String[] names; // формируем списки с данными для заполнения
+    String[] prices;
+
+    public CartFragment(ArrayList<String[]> list) {
+        this.products = list;
+        this.names = f.get_names(list);
+        this.prices = f.get_prices(list);
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        names = f.get_names(products); // формируем списки с данными для заполнения
+        prices = f.get_prices(products);
+
         return inflater.inflate(R.layout.fragment_cart, container, false);
     }
 
     public void onViewCreated (View view,  Bundle savedInstanceState) {
-        DataBaseHelper db = new DataBaseHelper();
-        Functions f = new Functions();
-
         ListView product_list = getView().findViewById(R.id.product_list);
-
-        ArrayList<String[]> products = db.getProductList(); // получаем данные из бд
-        String[] names = f.get_names(products); // формируем списки с данными для заполнения
-        String[] prices = f.get_prices(products);
 
         ArrayAdapter adapter = new ArrayAdapter(getActivity(), R.layout.list_item,
                 R.id.product_name_tv, names) {

@@ -1,5 +1,6 @@
 package com.example.x5.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.x5.DataBaseHelper;
 import com.example.x5.R;
+import com.example.x5.activities.MainActivity;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -25,14 +27,18 @@ public class ProfileFragment extends Fragment {
     String login;
     String username;
     String level;
+    ArrayList<String> data;
     int xp;
     DataBaseHelper db = new DataBaseHelper();
 
+    public ProfileFragment (ArrayList<String> data, String login) {
+        db.setUser_login(login);
+        this.data = data;
+        this.login = login;
+    }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        login = getArguments().getString("login_key"); // получаем логин из AppActivity
-        db.setUser_login(login);
-        ArrayList<String> data = db.profile_fragment_setup();
         username = data.get(0);
         level = data.get(1);
         xp = Integer.parseInt(data.get(2));
@@ -43,11 +49,12 @@ public class ProfileFragment extends Fragment {
         Button change_un_btn = view.findViewById(R.id.change_username_btn);
         Button delete_acc = view.findViewById(R.id.delete_btn);
         Button change_vkid_btn = view.findViewById(R.id.vkid_change_btn);
+        Button log_out_btn = view.findViewById(R.id.log_out_btn);
         TextView level_tv = view.findViewById(R.id.level_tv);
         ProgressBar level_bar = view.findViewById(R.id.progressBar);
         Switch switch_theme = view.findViewById(R.id.theme_switch);
 
-        level = level_tv.getText().toString() + " " + level; // получаем уровень из бд
+        level = "Уровень: " + level; // получаем уровень из бд
         ChangeUsername(username); // меняем ник на text view
 
         level_tv.setText(level); // выводин на экран уровень
@@ -89,6 +96,14 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 Toast.makeText(getActivity().getApplicationContext(),
                         "Эта функция еще в разработке!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        log_out_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent Intent = new Intent(getActivity(), MainActivity.class);
+                getActivity().startActivity(Intent);
             }
         });
     }
