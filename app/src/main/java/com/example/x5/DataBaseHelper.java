@@ -12,10 +12,10 @@ public class DataBaseHelper {
 
     public String user_login;
     public String Username = "Никнейм";
-    public int xp;
-    public int level;
+    public String vk_id;
 
-    private Boolean success; // нужен для работыфункции check_login (в ней будет храниться результат ее работы)
+    private boolean success;
+    private boolean acc_exists;
 
     private static final String TAG = "DBHelper"; // тег для LogCat
 
@@ -236,75 +236,6 @@ public class DataBaseHelper {
         }
     }
 
-    public int get_level() {
-        Thread thread = new Thread(new Runnable() { // создаем экземпляр
-            @Override
-            public void run() { // переопределяем метод
-                try {
-                    connect();
-                    String query = "SELECT level FROM users WHERE login = '" + user_login + "'"; // SQL запрос в бд
-                    ResultSet resultSet = connection.createStatement().executeQuery(query); // выполняем запрос
-
-                    while (resultSet.next()) {
-                        level = resultSet.getInt("level");
-                    }
-                    Log.i(TAG, "Got level!");
-                    connection.close();
-                } catch (Exception e) {
-                    level = 0;
-                    Log.e(TAG, "Could not get level!");
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        thread.start(); // запуск потока
-
-        try { // отчет о потоке
-            thread.join();
-            Log.i(TAG, "get_level Thread Succeed!");
-        } catch (Exception e) {
-            Log.e(TAG, "get_level Thread failed!");
-            level = 0;
-            e.printStackTrace();
-        }
-        return level;
-    }
-
-    public int get_xp() {
-        Thread thread = new Thread(new Runnable() { // создаем экземпляр
-            @Override
-            public void run() { // переопределяем метод
-                try {
-                    connect();
-                    String query = "SELECT xp FROM users WHERE login = '" + user_login + "'"; // SQL запрос в бд
-                    ResultSet resultSet = connection.createStatement().executeQuery(query); // выполняем запрос
-
-                    while (resultSet.next()) {
-                        xp = resultSet.getInt("xp");
-                    }
-                    Log.i(TAG, "Got xp!");
-                    connection.close();
-                } catch (Exception e) {
-                    xp = 0;
-                    Log.e(TAG, "Could not get xp!");
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        thread.start(); // запуск потока
-
-        try { // отчет о потоке
-            thread.join();
-            Log.i(TAG, "get_xp Thread Succeed!");
-        } catch (Exception e) {
-            Log.e(TAG, "get_xp Thread failed!");
-            xp = 0;
-            e.printStackTrace();
-        }
-        return xp;
-    }
 
     public void delete_account() {
         Thread thread = new Thread(new Runnable() { // создаем экземпляр
@@ -369,5 +300,110 @@ public class DataBaseHelper {
             return null;
         }
         return data;
+    }
+
+    public boolean account_exists(String login) {
+        Thread thread = new Thread(new Runnable() { // создаем экземпляр
+            @Override
+            public void run() { // переопределяем метод
+                try {
+                    connect();
+
+                    String query = "SELECT * from users WHERE login = '" + login + "'"; // SQL запрос в бд
+                    ResultSet resultSet = connection.createStatement().executeQuery(query); // выполняем запрос
+                    while (resultSet.next()) {
+                        acc_exists = resultSet.getString("login") != null;
+                    }
+                resultSet.close();
+                    Log.i(TAG, "Acc checked!");
+                } catch (Exception e) {
+                    Log.e(TAG, "Could not check acc!");
+                    acc_exists = false;
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start(); // запуск потока
+
+        try { // отчет о потоке
+            thread.join();
+            Log.i(TAG, "Acc_exists Thread Succeed!");
+        } catch (Exception e) {
+            Log.e(TAG, "Acc_exists Thread failed!");
+            e.printStackTrace();
+            acc_exists = false;
+        }
+        return acc_exists;
+    }
+
+    public void vk_id_is_not_null() {
+        if (vk_id == null) {
+            vk_id = "Отсутсвует";
+        }
+    }
+
+    public void update_VKid(String VK_id) {
+        Thread thread = new Thread(new Runnable() { // создаем экземпляр
+            @Override
+            public void run() { // переопределяем метод
+                try {
+                    connect();
+                    String query = "UPDATE users SET vk_id = '" + VK_id + "' WHERE login = '"
+                            + user_login + "'"; // SQL запрос в бд
+                    connection.createStatement().executeUpdate(query); // выполняем запрос
+                    Log.i(TAG, "VK_id updated!");
+                    connection.close();
+                } catch (Exception e) {
+                    Log.e(TAG, "Could not update VK_id!");
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start(); // запуск потока
+
+        try { // отчет о потоке
+            thread.join();
+            Log.i(TAG, "Update_VKid Thread Succeed!");
+        } catch (Exception e) {
+            Log.e(TAG, "Update_VKid Thread failed!");
+            e.printStackTrace();
+        }
+    }
+
+    public String  get_VKid() {
+        Thread thread = new Thread(new Runnable() { // создаем экземпляр
+            @Override
+            public void run() { // переопределяем метод
+                try {
+                    connect();
+                    String query = "SELECT vk_id FROM users WHERE login = '"
+                            + user_login + "'"; // SQL запрос в бд
+                    ResultSet resultSet = connection.createStatement().executeQuery(query); // выполняем запрос
+                    while (resultSet.next()) {
+                        vk_id = resultSet.getString("vk_id");
+                    }
+                    vk_id_is_not_null();
+                    Log.i(TAG, "Got VK_id!");
+                    resultSet.close();
+                    connection.close();
+                } catch (Exception e) {
+                    Log.e(TAG, "Could not get VK_id!");
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread.start(); // запуск потока
+
+        try { // отчет о потоке
+            thread.join();
+            Log.i(TAG, "Get_VKid Thread Succeed!");
+        } catch (Exception e) {
+            Log.e(TAG, "Get_VKid Thread failed!");
+            e.printStackTrace();
+        }
+        return vk_id;
     }
 }

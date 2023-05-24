@@ -270,5 +270,17 @@
             app:layout_constraintStart_toStartOf="@+id/log_out_view"
             app:layout_constraintTop_toTopOf="@+id/log_out_view" />
 
+        <Button
+            android:id="@+id/update_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/red_outline"
+            android:text="@string/update"
+            app:layout_constraintEnd_toEndOf="@+id/profile_outline"
+            app:layout_constraintStart_toStartOf="@+id/profile_outline"
+            app:layout_constraintTop_toBottomOf="@+id/log_out_view" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

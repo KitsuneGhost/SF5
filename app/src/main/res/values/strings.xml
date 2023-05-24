@@ -25,4 +25,5 @@
     <string name="tasks">Задания</string>
     <string name="combos">Комбо</string>
     <string name="log_out">Выйти</string>
+    <string name="update">Перезагрузить</string>
 </resources>

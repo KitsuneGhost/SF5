@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.example.x5.R;
 
@@ -24,8 +24,13 @@ public class QuestsFragment extends Fragment {
 
     public void onViewCreated (View view, Bundle savedInstanceState) {
         Button info_btn = view.findViewById(R.id.info_btn);
-        TextView combos = view.findViewById(R.id.combos_tv);
+        TextView challenge = view.findViewById(R.id.challenges);
         TextView tasks = view.findViewById(R.id.tasks_tv);
+
+        challenge.setText("Посещать школу 5 дней подряд.\n(0/5, 4 дня)\nНаграда:50 Опыта, 10$");
+        tasks.setText("Получить 5 по географии\n(0/1, 1 день, 5 XP)\nПолучить 5 по алгебре\n(0/2," +
+                " 3 дня, 10XP)");
+
 
         info_btn.setOnClickListener(new View.OnClickListener() {
             @Override

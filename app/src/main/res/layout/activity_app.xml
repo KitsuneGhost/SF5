@@ -35,12 +35,12 @@
 
         <LinearLayout
             android:id="@+id/profile_layout"
-            android:layout_width="136sp"
+            android:layout_width="130sp"
             android:layout_height="70sp"
             android:layout_marginBottom="28dp"
             android:clickable="true"
-            android:orientation="vertical"
-            android:focusable="true">
+            android:focusable="true"
+            android:orientation="vertical">
 
             <Space
                 android:layout_width="match_parent"
@@ -63,11 +63,11 @@
 
         <LinearLayout
             android:id="@+id/cart_layout"
-            android:layout_width="136sp"
+            android:layout_width="128sp"
             android:layout_height="match_parent"
             android:clickable="true"
-            android:orientation="vertical"
-            android:focusable="true">
+            android:focusable="true"
+            android:orientation="vertical">
 
             <Space
                 android:layout_width="match_parent"
@@ -90,11 +90,11 @@
 
         <LinearLayout
             android:id="@+id/quests_layout"
-            android:layout_width="136sp"
+            android:layout_width="130sp"
             android:layout_height="match_parent"
             android:clickable="true"
-            android:orientation="vertical"
-            android:focusable="true">
+            android:focusable="true"
+            android:orientation="vertical">
 
             <Space
                 android:layout_width="match_parent"

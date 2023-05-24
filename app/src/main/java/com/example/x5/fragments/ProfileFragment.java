@@ -50,6 +50,7 @@ public class ProfileFragment extends Fragment {
         Button delete_acc = view.findViewById(R.id.delete_btn);
         Button change_vkid_btn = view.findViewById(R.id.vkid_change_btn);
         Button log_out_btn = view.findViewById(R.id.log_out_btn);
+        Button update_btn = view.findViewById(R.id.update_btn);
         TextView level_tv = view.findViewById(R.id.level_tv);
         ProgressBar level_bar = view.findViewById(R.id.progressBar);
         Switch switch_theme = view.findViewById(R.id.theme_switch);
@@ -65,7 +66,8 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 UsernameDialogFragment fragment = new UsernameDialogFragment(login);
-                fragment.show(getActivity().getSupportFragmentManager(), fragment.TAG); // показываем фрагмент
+                fragment.show(getActivity().getSupportFragmentManager(), fragment.TAG);// показываем фрагмент
+                update_btn.setVisibility(View.VISIBLE);
             }
         });
 
@@ -94,8 +96,8 @@ public class ProfileFragment extends Fragment {
         change_vkid_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(),
-                        "Эта функция еще в разработке!", Toast.LENGTH_SHORT).show();
+                VkidFragment fragment = new VkidFragment(login);
+                fragment.show(getActivity().getSupportFragmentManager(), fragment.TAG);
             }
         });
 
@@ -104,6 +106,15 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 Intent Intent = new Intent(getActivity(), MainActivity.class);
                 getActivity().startActivity(Intent);
+            }
+        });
+
+        update_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                username = db.get_username();
+                ChangeUsername(username);
+                update_btn.setVisibility(View.INVISIBLE);
             }
         });
     }

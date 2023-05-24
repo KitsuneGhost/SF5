@@ -42,11 +42,16 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else {
                     String login = login_editText_l.getText().toString();
-                    int hashcoded_password = password_editText_l.getText().toString().hashCode();
-                    db.register(login, hashcoded_password); // вызываем функцию для регистрации
-                    Intent Intent = new Intent(MainActivity.this, AppActivity.class);
-                    Intent.putExtra("login_key", login);
-                    MainActivity.this.startActivity(Intent); //переход в app Activity
+                    if (db.account_exists(login)) {
+                        Toast.makeText(getApplicationContext(), "Такой аккаунт уже существует!",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        int hashcoded_password = password_editText_l.getText().toString().hashCode();
+                        db.register(login, hashcoded_password); // вызываем функцию для регистрации
+                        Intent Intent = new Intent(MainActivity.this, AppActivity.class);
+                        Intent.putExtra("login_key", login);
+                        MainActivity.this.startActivity(Intent); //переход в app Activity
+                    }
                 }
             }
         });
