@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.DialogFragment;
 
-import com.example.x5.DataBaseHelper;
+import com.example.x5.DataBaseClasses.DataBaseHelper;
 import com.example.x5.R;
 
 public class VkidFragment extends DialogFragment {

@@ -11,7 +11,7 @@ import android.widget.Button;
 
 import androidx.fragment.app.DialogFragment;
 
-import com.example.x5.DataBaseHelper;
+import com.example.x5.DataBaseClasses.DataBaseHelper;
 import com.example.x5.R;
 import com.example.x5.activities.MainActivity;
 

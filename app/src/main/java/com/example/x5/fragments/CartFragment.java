@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.x5.DataBaseHelper;
 import com.example.x5.R;
 import com.example.x5.Functions;
 
@@ -20,7 +19,6 @@ import java.util.ArrayList;
 
 
 public class CartFragment extends Fragment {
-    DataBaseHelper db = new DataBaseHelper();
     Functions f = new Functions();
     ArrayList<String[]> products; // получаем данные из бд
     String[] names; // формируем списки с данными для заполнения

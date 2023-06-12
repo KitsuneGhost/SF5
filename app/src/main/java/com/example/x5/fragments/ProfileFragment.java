@@ -14,7 +14,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.x5.DataBaseHelper;
+import com.example.x5.DataBaseClasses.DataBaseHelper;
 import com.example.x5.R;
 import com.example.x5.activities.MainActivity;
 
@@ -32,6 +32,7 @@ public class ProfileFragment extends Fragment {
     DataBaseHelper db = new DataBaseHelper();
 
     public ProfileFragment (ArrayList<String> data, String login) {
+        db.connect();
         db.setUser_login(login);
         this.data = data;
         this.login = login;

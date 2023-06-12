@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.example.x5.DataBaseHelper;
+import com.example.x5.DataBaseClasses.DataBaseHelper;
 import com.example.x5.R;
 import com.example.x5.Functions;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -37,6 +37,8 @@ public class BottomDialog extends BottomSheetDialogFragment {
 
         DataBaseHelper db = new DataBaseHelper();
         Functions f = new Functions();
+
+        db.connect();
 
         TextView info_view = getView().findViewById(R.id.Information_textView);
         String[] infos = f.get_info(db.getProductList());

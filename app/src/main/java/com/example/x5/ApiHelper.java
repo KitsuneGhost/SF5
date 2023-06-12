@@ -6,7 +6,7 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 interface Postable {
-    @POST("post")
+    @POST("method/wall.post")
     Call<PostReponse> make_post (@Body PostBody postBody);
 }
 

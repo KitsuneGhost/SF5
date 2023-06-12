@@ -1,9 +1,8 @@
-package com.example.x5;
+package com.example.x5.DataBaseClasses;
 
 import android.util.Log;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -14,21 +13,20 @@ public class DataBaseHelper {
     public String Username = "Никнейм";
     public String vk_id;
 
-    private boolean success;
-    private boolean acc_exists;
-
     private static final String TAG = "DBHelper"; // тег для LogCat
 
-    // парметры сервера и бд (в качестве сервера я пока использую локальный)
-    private final String host = "balarama.db.elephantsql.com"; // 10.0.2.2 / arjuna.db.elephantsql.com / balarama.db.elephantsql.com
-    private final String database = "alnjrvin"; // StudyFor5_DB / axjtwpko / alnjrvin
+    // парметры сервера и бд
+    private final String host = "balarama.db.elephantsql.com"; // 10.0.2.2 / balarama.db.elephantsql.com
+    private final String database = "alnjrvin"; // StudyFor5_DB / alnjrvin
     private final int port = 5432;
-    private final String user = "alnjrvin"; // postgres , axjtwpko, / alnjrvin
-    private final String pass = "hIU8zyNQynyyyaBrZYy4sZ_l3IetE4EB"; // i3J!PqPz / jmrDkPhQZ2mAtofxsrgCPku47IM5xVxs / hIU8zyNQynyyyaBrZYy4sZ_l3IetE4EB
+    private final String user = "alnjrvin"; // postgres / alnjrvin
+    private final String pass = "hIU8zyNQynyyyaBrZYy4sZ_l3IetE4EB"; // i3J!PqPz / hIU8zyNQynyyyaBrZYy4sZ_l3IetE4EB
 
     private String url = "jdbc:postgresql://%s:%d/%s"; // строка-шаблон, для создания ссылки
 
-    public DataBaseHelper() {  // конструктор
+    public DataBaseHelper() {
+        // конструктор
+        // формирует полную ссылку для подключения к бд
         this.url = String.format(this.url, this.host, this.port, this.database); // формируем полную ссылку
     }
 
@@ -36,138 +34,74 @@ public class DataBaseHelper {
         this.user_login = login;
     }
 
-    private void connect() {
-        Thread thread = new Thread(new Runnable() { //создаём экземпляр класса thread
-            @Override
-            public void run() {  // переопределяем run()
-                try {
-                    Class.forName("org.postgresql.Driver"); // регистрируем драйвер
-                    connection = DriverManager.getConnection(url, user, pass); // создаем подключение к бд
-                    Log.i(TAG, "Connection succeed!");
-                }
-                catch (Exception e) { // ловим исключения
-                    Log.e(TAG, "Connection Failed!");
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        thread.start(); // запускаем поток
+    public  void disconnect() {
+        // метод для отключения от бд
         try {
-            thread.join(); // ждем смерти потока
-            Log.i(TAG, "Connection Thread Succeed!"); // сообщаем об успешном завершении
-        }
-        catch (Exception e) {
-            Log.e(TAG, "Connection Thread Failed!"); // или о неуспешном завершении
+            DisconnectTask disconnectTask = new DisconnectTask();
+            disconnectTask.execute(connection);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void register(String login, int password) {  // метод для регистрации пользователей
-        Thread thread = new Thread(new Runnable() { // создаем экземпляр
-            @Override
-            public void run() { // переопределяем метод
-                try {
-                    connect();
-                    String query = "INSERT INTO users (login, password) VALUES ('"  + login
-                            + "', " + password + ")"; // SQL запрос в бд
-                    connection.createStatement().executeUpdate(query);
-                    setUser_login(login);
-                    connection.close();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        thread.start(); // запуск потока
-        // отчет о потоке
+    public void connect() {
+        // метод для подключения к бд
+        ConnectTask connectTask = new ConnectTask();
+        String[] data = new String[] {url, user, pass};
+        connectTask.execute(data);
         try {
-            thread.join();
-            Log.i(TAG, "Reg Thread Succeed!");
+            connection = connectTask.get();
         } catch (Exception e) {
-            Log.e(TAG, "Reg Thread failed!");
             e.printStackTrace();
         }
     }
 
-    public boolean check_login(String login, int password) {// функция для проверки пароля
-        Thread thread = new Thread(new Runnable() { // создаем экземпляр
-            @Override
-            public void run() { // переопределяем метод
-                try {
-                    connect();
-                    String query = "SELECT password FROM users WHERE login = '" + login + "'"; // SQL запрос в бд
-                    ResultSet resultSet = connection.createStatement().executeQuery(query); // выполняем запрос
+    public void register(String login, String password) {
+        // метод для регистрации пользователей с указанными логином и паролеи
+        // логин и пароль передаются в параметрах
+        RegisterTask registerTask = new RegisterTask(connection);
+        String[] data = new String[] {login, password};
+        registerTask.execute(data);
+    }
 
-                    while (resultSet.next()) {
-                        int rs_password = resultSet.getInt("password"); // получаем пароль из resultSet
-                        success = rs_password == password; // сравниваем пароли и присваем резултат success
-                        if (success) {
-                            setUser_login(login);
-                        }
-                    }
-                    Log.i(TAG, "Login checked");
-                    resultSet.close();
-                    connection.close();
-
-                } catch (Exception e) {
-                    Log.e(TAG, "Login check failed");
-                    e.printStackTrace();
-                    success = false;
-                }
-            }
-        });
-
-        thread.start(); // запуск потока
-
-        try { // отчет о потоке
-            thread.join();
-            Log.i(TAG, "Check_login Thread Succeed!");
-            return success;
+    public boolean login(String login, String password) {
+        // функция для проверки пароля для указанного логина
+        // логин и проверяемый пароль передаются в параметрах
+        LoginTask loginTask = new LoginTask(connection);
+        String[] data = new String[] {login, password};
+        loginTask.execute(data);
+        try {
+            return loginTask.get();
         } catch (Exception e) {
-            Log.e(TAG, "Check_login Thread failed!");
             e.printStackTrace();
             return false;
         }
     }
 
-    public ArrayList<String[]> getProductList() {
-        ArrayList<String[]> product_list = new ArrayList<>();
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    connect();
-                    String query = "SELECT * FROM products";
-                    ResultSet resultSet = connection.createStatement().executeQuery(query);
-
-                    while (resultSet.next()) {
-                        String product_name = resultSet.getString("product_name");
-                        String product_price = ""+resultSet.getInt("product_price");
-                        String product_info = resultSet.getString("product_info");
-                        String[] list = new String[] {product_name, product_price, product_info};
-                        product_list.add(list);
-                    }
-                    resultSet.close();
-                    connection.close();
-                    Log.i(TAG, "Got product list!");
-                } catch (Exception e) {
-                    Log.e(TAG, "Did not get product list!");
-                    e.printStackTrace();
-                }
-            }
-        });
-        thread.start();
-
+    public boolean account_exists(String login) {
+        // метод для проверки существования аакаунта с указанным логином
+        // логин передается в качестве параметра
+        ExistTask existTask = new ExistTask(connection);
+        existTask.execute(login);
         try {
-            thread.join();
-            Log.i(TAG, "GetProductList Thread Succeed!");
+            return existTask.get();
         } catch (Exception e) {
-            Log.e(TAG, "GetProductList  Thread failed!");
             e.printStackTrace();
+            return false;
         }
-        return product_list;
+    }
+
+
+    public ArrayList<String[]> getProductList() {
+        // метод для получения списка продуктов из бд
+        ProductsTask productsTask = new ProductsTask(connection);
+        productsTask.execute();
+        try {
+            return productsTask.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String get_username () {
@@ -266,6 +200,8 @@ public class DataBaseHelper {
     }
 
     public ArrayList<String> profile_fragment_setup () {
+        // для получения данных о пльзователе с указанным логином
+        // логин в этом методе - поле класса
         ArrayList<String> data = new ArrayList<>();
         Thread thread = new Thread(new Runnable() { // создаем экземпляр
             @Override
@@ -276,9 +212,9 @@ public class DataBaseHelper {
                     String query = "SELECT * from users WHERE login = '" + user_login + "'"; // SQL запрос в бд
                     ResultSet resultSet = connection.createStatement().executeQuery(query); // выполняем запрос
                     while (resultSet.next()) {
-                       data.add(resultSet.getString("username"));
-                       data.add("" + resultSet.getInt("level"));
-                       data.add("" + resultSet.getInt("xp"));
+                        data.add(resultSet.getString("username"));
+                        data.add("" + resultSet.getInt("level"));
+                        data.add("" + resultSet.getInt("xp"));
                     }
                     resultSet.close();
                     Log.i(TAG, "Got data!");
@@ -300,41 +236,6 @@ public class DataBaseHelper {
             return null;
         }
         return data;
-    }
-
-    public boolean account_exists(String login) {
-        Thread thread = new Thread(new Runnable() { // создаем экземпляр
-            @Override
-            public void run() { // переопределяем метод
-                try {
-                    connect();
-
-                    String query = "SELECT * from users WHERE login = '" + login + "'"; // SQL запрос в бд
-                    ResultSet resultSet = connection.createStatement().executeQuery(query); // выполняем запрос
-                    while (resultSet.next()) {
-                        acc_exists = resultSet.getString("login") != null;
-                    }
-                resultSet.close();
-                    Log.i(TAG, "Acc checked!");
-                } catch (Exception e) {
-                    Log.e(TAG, "Could not check acc!");
-                    acc_exists = false;
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        thread.start(); // запуск потока
-
-        try { // отчет о потоке
-            thread.join();
-            Log.i(TAG, "Acc_exists Thread Succeed!");
-        } catch (Exception e) {
-            Log.e(TAG, "Acc_exists Thread failed!");
-            e.printStackTrace();
-            acc_exists = false;
-        }
-        return acc_exists;
     }
 
     public void vk_id_is_not_null() {
@@ -405,5 +306,29 @@ public class DataBaseHelper {
             e.printStackTrace();
         }
         return vk_id;
+    }
+
+    public ArrayList<String> getTask() {
+        ArrayList<String> output;
+        GetTask getTask = new GetTask(connection);
+        try {
+            output = getTask.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            output = null;
+        }
+        return output;
+    }
+
+    public ArrayList<String> getChallenge() {
+        ArrayList<String> output;
+        GetChallenge getChallenge = new GetChallenge(connection);
+        try {
+            output = getChallenge.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+            output = null;
+        }
+        return output;
     }
 }

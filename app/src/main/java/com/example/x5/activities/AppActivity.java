@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.x5.DataBaseHelper;
+import com.example.x5.DataBaseClasses.DataBaseHelper;
 import com.example.x5.R;
 import com.example.x5.fragments.CartFragment;
 import com.example.x5.fragments.ProfileFragment;
@@ -46,19 +46,20 @@ public class AppActivity extends AppCompatActivity {
         Bundle arguments = getIntent().getExtras(); // получаем интент из предыдущей активности
         String login = arguments.get("login_key").toString(); // получаем логин из интента
 
+        db.connect();
         db.setUser_login(login);
 
+        ArrayList<String> profile_data = db.profile_fragment_setup();
         ArrayList<String[]> products = db.getProductList();
-        ArrayList<String> data = db.profile_fragment_setup();
 
-        FragmentManager fm = getSupportFragmentManager();
+        FragmentManager fm = getSupportFragmentManager(); // нужен для смены фрагментов
         FragmentTransaction ft = fm.beginTransaction();
 
-        CartFragment cartFragment = new CartFragment(products);
-        ProfileFragment profileFragment = new ProfileFragment(data, login);
+        CartFragment cartFragment = new CartFragment(products); // экземпляры фрагментоф
+        ProfileFragment profileFragment = new ProfileFragment(profile_data, login);
 
         QuestsFragment questsFragment = new QuestsFragment();
-        ft.add(R.id.fragmentLayout, cartFragment);
+        ft.add(R.id.fragmentLayout, cartFragment); // сразу показываем фрагмент корзины
         ft.commit();
 
         LinearLayout profile_layout = findViewById(R.id.profile_layout);

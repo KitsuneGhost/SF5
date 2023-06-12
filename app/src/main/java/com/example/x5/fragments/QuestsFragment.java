@@ -11,10 +11,15 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
+import com.example.x5.DataBaseClasses.DataBaseHelper;
 import com.example.x5.R;
+
+import java.util.ArrayList;
 
 
 public class QuestsFragment extends Fragment {
+
+    DataBaseHelper db = new DataBaseHelper();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -24,13 +29,38 @@ public class QuestsFragment extends Fragment {
 
     public void onViewCreated (View view, Bundle savedInstanceState) {
         Button info_btn = view.findViewById(R.id.info_btn);
-        TextView challenge = view.findViewById(R.id.challenges);
+        TextView challenges = view.findViewById(R.id.challenges);
         TextView tasks = view.findViewById(R.id.tasks_tv);
 
-        challenge.setText("Посещать школу 5 дней подряд.\n(0/5, 4 дня)\nНаграда:50 Опыта, 10$");
-        tasks.setText("Получить 5 по географии\n(0/1, 1 день, 5 XP)\nПолучить 5 по алгебре\n(0/2," +
-                " 3 дня, 10XP)");
+        db.connect();
 
+        ArrayList<String> task_data = db.getTask();
+        ArrayList<String> challenge_data = db.getChallenge();
+
+        String task_text = task_data.get(0);
+        String task_goal = task_data.get(1);
+        String task_xp = task_data.get(2);
+        String task_points = task_data.get(3);
+        String task_time = task_data.get(5);
+
+        String challenge_text = challenge_data.get(0);
+        String challenge_goal =challenge_data.get(1);
+        String challenge_xp = challenge_data.get(2);
+        String challenge_points = challenge_data.get(3);
+        String challenge_time = challenge_data.get(5);
+
+        String task = task_text + "\n"
+                + "Кол-во:" + task_goal + "\n"
+                + "Награда:" + task_xp + " XP и " + task_points + "баллов" + "\n"
+                + "Время выполнения: " + task_time + "Дней";
+
+        String challenge = challenge_text + "\n"
+                + "Кол-во:" + challenge_goal + "\n"
+                + "Награда:" + challenge_xp + " XP и " + challenge_points + "баллов" + "\n"
+                + "Время выполнения: " + challenge_time + "Дней";
+
+        tasks.setText(task);
+        challenges.setText(challenge);
 
         info_btn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -9,20 +9,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.x5.DataBaseHelper;
+import com.example.x5.DataBaseClasses.DataBaseHelper;
 import com.example.x5.R;
 import com.example.x5.Functions;
 
 public class MainActivity extends AppCompatActivity {
 
     Functions f = new Functions();
+    DataBaseHelper db = new DataBaseHelper(); // создание экземпляра бд
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        DataBaseHelper db = new DataBaseHelper(); // создание экземпляра бд
+        db.connect();
 
         Button login_btn = findViewById(R.id.login_button);
         Button register_button_l = findViewById(R.id.register_button_l);
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show(); // проверка полей
                 }
                 else if (f.eight_length(password_editText_l)) {
-                    Toast.makeText(getApplicationContext(), "В пароле меньше символов!",
+                    Toast.makeText(getApplicationContext(), "В пароле меньше 8 символов!",
                             Toast.LENGTH_SHORT).show(); // проверка длины пароля
                 }
                 else {
@@ -46,11 +46,12 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Такой аккаунт уже существует!",
                                 Toast.LENGTH_SHORT).show();
                     } else {
-                        int hashcoded_password = password_editText_l.getText().toString().hashCode();
-                        db.register(login, hashcoded_password); // вызываем функцию для регистрации
+                        String password = password_editText_l.getText().toString();
+                        db.register(login, password); // вызываем функцию для регистрации
                         Intent Intent = new Intent(MainActivity.this, AppActivity.class);
                         Intent.putExtra("login_key", login);
                         MainActivity.this.startActivity(Intent); //переход в app Activity
+                        db.disconnect();
                     }
                 }
             }
@@ -64,11 +65,12 @@ public class MainActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();  // процверка полей
                 } else {
                     String login = login_editText_l.getText().toString();
-                    int password = password_editText_l.getText().toString().hashCode();
-                    if (db.check_login(login, password)) {  // проверка пароля
+                    String password = password_editText_l.getText().toString();
+                    if (db.login(login, password)) {  // проверка пароля
                         Intent Intent = new Intent(MainActivity.this, AppActivity.class);
                         Intent.putExtra("login_key", login);
                         MainActivity.this.startActivity(Intent); //переход в другую активность
+                        db.disconnect();
                     } else {
                         Toast.makeText(getApplicationContext(), "Неверный логин или пароль!",
                                 Toast.LENGTH_SHORT).show();
