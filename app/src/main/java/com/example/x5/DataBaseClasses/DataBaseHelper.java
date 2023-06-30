@@ -146,7 +146,6 @@ public class DataBaseHelper {
             @Override
             public void run() { // переопределяем метод
                 try {
-                    connect();
                     String query = "UPDATE users SET username = '" + username + "' WHERE login = '"
                             + user_login + "'"; // SQL запрос в бд
                     connection.createStatement().executeUpdate(query); // выполняем запрос
@@ -309,25 +308,83 @@ public class DataBaseHelper {
     }
 
     public ArrayList<String> getTask() {
-        ArrayList<String> output;
-        GetTask getTask = new GetTask(connection);
-        try {
-            output = getTask.get();
+        ArrayList<String> output = new ArrayList<>();
+        Thread thread = new Thread(new Runnable() { // создаем экземпляр
+            @Override
+            public void run() { // переопределяем метод
+                try {
+                    String query = "SELECT * FROM tasks WHERE type = 'Задание'";
+                    ResultSet rs = connection.createStatement().executeQuery(query);
+                    while (rs.next()) {
+                        String text = rs.getString("text");
+                        String goal = rs.getString("goal");
+                        String xp = rs.getString("xp");
+                        String points = rs.getString("points");
+                        String type = rs.getString("type");
+                        String time = rs.getString("time");
+                        output.add(text);
+                        output.add(goal);
+                        output.add(xp);
+                        output.add(points);
+                        output.add(type);
+                        output.add(time);
+                    }
+                    rs.close();
+                } catch (Exception e) {
+                    Log.e(TAG, "Could not get Tasks!");
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start(); // запуск потока
+
+        try { // отчет о потоке
+            thread.join();
+            Log.i(TAG, "Get_Tasks Thread Succeed!");
         } catch (Exception e) {
+            Log.e(TAG, "Get_Tasks Thread failed!");
             e.printStackTrace();
-            output = null;
         }
         return output;
     }
 
     public ArrayList<String> getChallenge() {
-        ArrayList<String> output;
-        GetChallenge getChallenge = new GetChallenge(connection);
-        try {
-            output = getChallenge.get();
+        ArrayList<String> output = new ArrayList<>();
+        Thread thread = new Thread(new Runnable() { // создаем экземпляр
+            @Override
+            public void run() { // переопределяем метод
+                try {
+                    String query = "SELECT * FROM tasks WHERE type = 'Челлендж'";
+                    ResultSet rs = connection.createStatement().executeQuery(query);
+                    while (rs.next()) {
+                        String text = rs.getString("text");
+                        String goal = rs.getString("goal");
+                        String xp = rs.getString("xp");
+                        String points = rs.getString("points");
+                        String type = rs.getString("type");
+                        String time = rs.getString("time");
+                        output.add(text);
+                        output.add(goal);
+                        output.add(xp);
+                        output.add(points);
+                        output.add(type);
+                        output.add(time);
+                    }
+                    rs.close();
+                } catch (Exception e) {
+                    Log.e(TAG, "Could not get challenge!");
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start(); // запуск потока
+
+        try { // отчет о потоке
+            thread.join();
+            Log.i(TAG, "Get_challenge Thread Succeed!");
         } catch (Exception e) {
+            Log.e(TAG, "Get_challenge Thread failed!");
             e.printStackTrace();
-            output = null;
         }
         return output;
     }

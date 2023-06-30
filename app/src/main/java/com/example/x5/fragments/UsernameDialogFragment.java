@@ -19,6 +19,7 @@ import com.example.x5.Functions;
 public class UsernameDialogFragment extends DialogFragment {
     String TAG = "Username Fragment";
     String login;
+    DataBaseHelper db = new DataBaseHelper();
 
     public UsernameDialogFragment(String login) {
        this.login = login;
@@ -37,6 +38,8 @@ public class UsernameDialogFragment extends DialogFragment {
 
         Functions f = new Functions();
 
+        db.connect();
+
         change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +57,6 @@ public class UsernameDialogFragment extends DialogFragment {
                             "Ник слишком длинный! Максимум символов:8.",
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    DataBaseHelper db = new DataBaseHelper();
                     db.setUser_login(login);
                     db.update_username(username);
                     dismiss(); // закрытие фрагмента
@@ -68,5 +70,10 @@ public class UsernameDialogFragment extends DialogFragment {
                 dismiss(); // закрытие фрагмента
             }
         });
+    }
+
+    public void onDestroy() {
+        super.onDestroy();
+        db.disconnect();
     }
 }

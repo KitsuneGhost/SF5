@@ -70,4 +70,9 @@ public class QuestsFragment extends Fragment {
             }
         });
     }
+
+    public void onDestroy() {
+        super.onDestroy();
+        db.disconnect();
+    }
 }

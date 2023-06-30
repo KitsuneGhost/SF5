@@ -52,6 +52,8 @@ public class AppActivity extends AppCompatActivity {
         ArrayList<String> profile_data = db.profile_fragment_setup();
         ArrayList<String[]> products = db.getProductList();
 
+        db.disconnect();
+
         FragmentManager fm = getSupportFragmentManager(); // нужен для смены фрагментов
         FragmentTransaction ft = fm.beginTransaction();
 
